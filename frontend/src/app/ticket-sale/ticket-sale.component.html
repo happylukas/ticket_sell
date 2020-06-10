@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [title]="title"></app-header>
 <app-bg-content></app-bg-content>
 <div class="mt-4 ml-3 mr-3 ticket-sale-page">
   <form>
@@ -18,6 +18,12 @@
       </div>
     </div>
     <div class="form-group row">
+      <label for="inputphone" class="col-4 col-form-label text-right">Phone:</label>
+      <div class="col-8">
+        <input type="text" class="form-control" id="inputphone" placeholder="Phone" />
+      </div>
+    </div>
+    <div class="form-group row">
       <label for="tickets" class="col-4 col-form-label text-right">Ticket:</label>
       <div class="col-8">
         <select class="form-control" id="tickets">
@@ -29,7 +35,7 @@
         </select>
       </div>
     </div>
-    <div class="form-group row justify-content-center mt-5">
+    <div class="form-group row justify-content-center mt-2">
       <button class="btn btn-success pr-5 pl-5">Pay</button>
     </div>
   </form>

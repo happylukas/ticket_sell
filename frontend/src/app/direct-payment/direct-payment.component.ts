@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DirectPaymentComponent implements OnInit {
 
+  title: string = 'Payment';
+
   constructor() { }
 
   ngOnInit(): void {

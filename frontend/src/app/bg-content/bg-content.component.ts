@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BgContentService } from '../services/bg-content.service';
 
 @Component({
   selector: 'app-bg-content',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BgContentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private bgContentService: BgContentService) { }
 
   ngOnInit(): void {
+    this.bgContentService.getBackGround().subscribe(data => {
+      console.log(data);
+    })
   }
 
 }
