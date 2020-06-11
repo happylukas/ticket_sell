@@ -11,14 +11,14 @@ import {
   providedIn: 'root',
 })
 export class BgContentService {
-  apiUrl: string = 'localhost:5000';
+  private REST_API_SERVER = 'http://localhost:5000/get_bgcontent';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
   getBackGround(): Observable<any> {
     // let API_URL = `${this.apiUrl}`;
-    return this.http.get(this.apiUrl);
+    return this.httpClient.get(this.REST_API_SERVER);
   }
 }

@@ -1,2 +1,9 @@
-flask
-stripe
+Flask-Cors
+marshmallow
+Flask
+Flask-SQLAlchemy
+flask-marshmallow
+Flask-Script
+Flask-Migrate
+Flask-RESTful
+PyMySQL

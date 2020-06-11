@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TicketSaleService} from '../services/ticket-sale.service'
 
 @Component({
   selector: 'app-ticket-sale',
@@ -8,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class TicketSaleComponent implements OnInit {
 
   title: string = 'Ticket Sale';
+  tickets: any
 
-  constructor() { }
+  constructor(private ticketSaleService: TicketSaleService) { }
 
   ngOnInit(): void {
+    this.ticketSaleService.getTickets().subscribe((data: any) => {
+      console.log(data.data);
+      this.tickets = data.data;
+    })
   }
 
 }
