@@ -4,10 +4,6 @@ from flask_restful import Resource
 
 from Model import db, Bgcontent, BgcontentSchema
 
-from flask_cors import cross_origin
-
-import json
-
 bgcontents_schema = BgcontentSchema(many=True)
 
 bgcontent_schema = BgcontentSchema()
@@ -30,7 +26,6 @@ def convert_park_to_dict(park, OBJ):
 class BgcontentResource(Resource):
 
     @staticmethod
-    @cross_origin()
     def get():
 
         bgcontents = Bgcontent.query.all()

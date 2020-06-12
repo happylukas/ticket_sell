@@ -3,10 +3,6 @@ from flask import request
 from flask_restful import Resource
 from Model import db, Tickets, TicketsSchema
 
-from flask_cors import cross_origin
-
-import json
-
 tickets_schema = TicketsSchema(many=True)
 
 ticket_schema = TicketsSchema()
@@ -29,7 +25,7 @@ def convert_park_to_dict(park, OBJ):
 class TicketsResource(Resource):
 
     @staticmethod
-    @cross_origin()
+
     def get():
 
         tickets = Tickets.query.filter_by(ticket_status=0)

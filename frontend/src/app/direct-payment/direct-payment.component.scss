@@ -4,3 +4,18 @@
         margin-right: 200px !important;
     }
 }
+
+@media only screen and (max-width: 976px) {
+    .ticket-sale-page {
+        height: 450px;
+        overflow: auto;
+    }
+}
+
+.error_message {
+    min-height: 19px;
+}
+
+.result_message {
+    min-height: 21px;
+}

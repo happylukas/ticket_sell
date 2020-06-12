@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
     <a *ngIf="checktitle; else elseBlock" href="" class="navbar-brand">{{title}}</a>
     <ng-template #elseBlock>
         <a class="navbar-brand text-white">{{title}}</a>
@@ -9,17 +9,23 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarMenu">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a href="" class="nav-link text-center">Main</a>
+            <li class="nav-item" *ngIf="!login_status">
+                <a routerLink="" class="nav-link text-center">Main</a>
             </li>
-            <li class="nav-item">
-                <a href="ticket-sale" class="nav-link text-center">Ticket Sale</a>
+            <li class="nav-item" *ngIf="!login_status">
+                <a routerLink="/ticket-sale" class="nav-link text-center">Ticket Sale</a>
             </li>
-            <li class="nav-item">
-                <a href="direct-pay" class="nav-link text-center">Direct Payment</a>
+            <li class="nav-item" *ngIf="!login_status">
+                <a routerLink="/direct-pay" class="nav-link text-center">Direct Payment</a>
             </li>
-            <li class="nav-item">
-                <a href="login" class="nav-link text-center">Login</a>
+            <li class="nav-item" *ngIf="!login_status">
+                <a routerLink="/login" class="nav-link text-center">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="login_status">
+                <a routerLink="/transactions" class="nav-link text-center">Transactions</a>
+            </li>
+            <li class="nav-item" *ngIf="login_status">
+                <a class="nav-link text-center logout" (click)="logout()">Logout</a>
             </li>
         </ul>
     </div>

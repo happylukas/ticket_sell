@@ -1,37 +1,70 @@
 <app-header [title]="title"></app-header>
 <app-bg-content></app-bg-content>
-<div class="mt-4 ml-3 mr-3 ticket-sale-page">
-  <form>
-    <div class="form-group row">
-      <label for="buy_ticket" class="col-5 col-form-label font-weight-bold">Buy ticket:10$</label>
+<div class="mt-2 ml-3 mr-3 ticket-sale-page">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group row mb-1">
+      <label for="buy_ticket" class="col-5 col-form-label font-weight-bold">Buy ticket:{{ticket_amount}}$</label>
     </div>
-    <div class="form-group row">
+    <p [ngClass]="submitted?'text-center mb-0 result_message text-danger':'text-center mb-0 result_message text-success'"><b>{{result}}</b></p>
+    <div class="form-group row mb-2">
       <label for="inputname" class="col-4 col-form-label text-right">Name:</label>
       <div class="col-8">
-        <input type="text" class="form-control" id="inputname" placeholder="Name" />
+        <input type="text" formControlName="firstname" class="form-control" placeholder="Name"
+          [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" />
       </div>
+      <div class="col-4"></div>
+      <div class="col-8 error_message">
+        <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback d-block">
+          <div *ngIf="f.firstname.errors.required">firstname is required</div>
+        </div>
+      </div>
+
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-2">
       <label for="inputlastname" class="col-4 col-form-label text-right">Last Name:</label>
       <div class="col-8">
-        <input type="text" class="form-control" id="inputlastname" placeholder="Last Name" />
+        <input type="text" formControlName="lastname" class="form-control" placeholder="Last Name"
+          [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" />
       </div>
+      <div class="col-4"></div>
+      <div class="col-8 error_message">
+        <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback d-block">
+          <div *ngIf="f.lastname.errors.required">lastname is required</div>
+        </div>
+      </div>
+
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-2">
       <label for="inputphone" class="col-4 col-form-label text-right">Phone:</label>
       <div class="col-8">
-        <input type="text" class="form-control" id="inputphone" placeholder="Phone" />
+        <input type="text" formControlName="phone" class="form-control" placeholder="Phone"
+          [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
       </div>
+      <div class="col-4"></div>
+      <div class="col-8 error_message">
+        <div *ngIf="submitted && f.phone.errors" class="invalid-feedback d-block">
+          <div *ngIf="f.phone.errors.required">phone is required</div>
+        </div>
+      </div>
+
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-2">
       <label for="tickets" class="col-4 col-form-label text-right">Ticket:</label>
-      <div class="col-8">
-        <select class="form-control" id="tickets">
-          <option *ngFor = "let ticket of tickets; let i = index" value="{{ticket.ticket_number}}" [selected]="i === 0" >
+      <div class="col-8 error_message">
+        <select formControlName="ticket_number" class="form-control" [(ngModel)]="default_ticket"
+          [ngClass]="{ 'is-invalid': submitted && f.ticket_number.errors }">
+          <option *ngFor="let ticket of tickets; let i = index" value="{{ticket.ticket_number}}">
             {{ticket.ticket_number}}
           </option>
         </select>
       </div>
+      <div class="col-4"></div>
+      <div class="col-8 error_message">
+        <div *ngIf="submitted && f.ticket_number.errors" class="invalid-feedback d-block">
+          <div *ngIf="f.ticket_number.errors.required">ticket_number is {{tickets.lenght>0?'required':'empty'}}</div>
+        </div>
+      </div>
+
     </div>
     <div class="form-group row justify-content-center mt-2">
       <button class="btn btn-success pr-5 pl-5">Pay</button>
@@ -39,3 +72,4 @@
   </form>
 </div>
 <app-footer></app-footer>
+<router-outlet></router-outlet>

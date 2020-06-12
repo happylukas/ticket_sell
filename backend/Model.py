@@ -6,6 +6,8 @@ from flask_marshmallow import Marshmallow
 
 from flask_sqlalchemy import SQLAlchemy
 
+from datetime import datetime
+
 ma = Marshmallow()
 
 db = SQLAlchemy()
@@ -52,6 +54,7 @@ class Bgcontent(db.Model):
 
         self.content = content
 
+
 class Tickets(db.Model):
 
     __tablename__ = 'tickets'
@@ -67,6 +70,51 @@ class Tickets(db.Model):
         self.ticket_number = ticket_number
 
         self.ticket_status = ticket_status
+
+
+class Transactions(db.Model):
+
+    __tablename__ = 'transactions'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    firstname = db.Column(db.String(150), nullable=False)
+
+    lastname = db.Column(db.String(150), nullable=False)
+
+    phone = db.Column(db.String(150), nullable=False)
+
+    email = db.Column(db.String(150), nullable=False)
+
+    amount = db.Column(db.Integer, nullable=False)
+
+    description = db.Column(db.String(150), nullable=False)
+
+    ticket_number = db.Column(db.String(150), nullable=False)
+
+    token = db.Column(db.String(150), nullable=False)
+
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+
+    def __init__(self, firstname, lastname, phone, email, amount, description, ticket_number, token, created_at):
+
+        self.firstname = firstname
+
+        self.lastname = lastname
+
+        self.phone = phone
+
+        self.email = email
+
+        self.amount = amount
+
+        self.description = description
+
+        self.ticket_number = ticket_number
+
+        self.token = token
+
+        self.created_at = created_at
 
 
 class UserSchema(ma.Schema):
@@ -98,4 +146,28 @@ class TicketsSchema(ma.Schema):
     ticket_number = fields.String(required=True)
 
     ticket_status = fields.Integer(dump_only=True)
+
+
+class TransactionsSchema(ma.Schema):
+
+    id = fields.Integer(dump_only=True)
+
+    firstname = fields.String(required=True)
+
+    lastname = fields.String(required=True)
+
+    phone = fields.String(required=True)
+
+    email = fields.String(required=True)
+
+    amount = fields.Integer()
+
+    description = fields.String(required=True)
+
+    ticket_number = fields.String(required=False)
+
+    token = fields.String(required=True)
+
+    created_at = fields.DateTime(required=False)
+
 

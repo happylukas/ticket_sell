@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from '../services/login.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +14,13 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  error: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private loginService: LoginService,
   ) {}
 
   ngOnInit(): void {
@@ -24,6 +28,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+    this.error='';
   }
 
   get f() {
@@ -33,26 +38,27 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // reset alerts on submit
-    // this.alertService.clear();
-
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
 
     this.loading = true;
-    // this.accountService
-    //   .login(this.f.username.value, this.f.password.value)
-    //   .pipe(first())
-    //   .subscribe(
-    //     (data) => {
-    //       this.router.navigate([this.returnUrl]);
-    //     },
-    //     (error) => {
-    //       this.alertService.error(error);
-    //       this.loading = false;
-    //     }
-    //   );
+    this.loginService
+      .login(this.f.username.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          this.router.navigate(['/transactions']);
+          this.error = '';
+          console.log(data);
+        },
+        (error) => {
+          // this.alertService.error(error);
+          console.log(error.error.message);
+          this.error = error.error.message;
+          this.loading = false;
+        }
+      );
   }
 }

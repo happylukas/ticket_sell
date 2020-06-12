@@ -7,17 +7,15 @@ def create_app(config_filename):
 
     app = Flask(__name__)
 
-    # CORS(app)
-    #
-    # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app)
+
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     app.config.from_object(config_filename)
 
     from app import api_bp
 
     app.register_blueprint(api_bp, url_prefix='/')
-
-    # app.register_blueprint(template_bp, url_prefix='/')
 
     from Model import db
 

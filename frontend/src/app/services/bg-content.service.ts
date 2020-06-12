@@ -11,7 +11,7 @@ import {
   providedIn: 'root',
 })
 export class BgContentService {
-  private REST_API_SERVER = 'http://localhost:5000/get_bgcontent';
+  private REST_API_SERVER = 'https://01d80137f53b.ngrok.io/get_bgcontent';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 

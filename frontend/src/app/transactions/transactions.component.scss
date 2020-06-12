@@ -24,7 +24,18 @@
     }
 }
 
-
 .input_date {
     font-size: 15px;
+}
+
+.transaction {
+    margin-top: 80px;
+}
+
+.mat-row:nth-child(even) {
+    background-color: white;
+}
+
+.mat-row:nth-child(odd) {
+    background-color: #eceef1;
 }

@@ -1,22 +1,22 @@
 <app-header [title]="title"></app-header>
-<div>
+<div class="transaction">
     <div class="row mt-4 filter">
         <label class="col-12 col-sm-1 d-flex align-items-center">Filter:</label>
         <div class="col-12 col-sm-5 d-flex">
             <div class="col-6 col-sm-6">
-                <button class="btn btn-secondary w-100 filter_button">Last 24 hours</button>
+                <button class="btn btn-secondary w-100 filter_button" (click)="filterByDay()">Last 24 hours</button>
             </div>
             <div class="col-6 col-sm-6">
-                <button class="btn btn-secondary w-100 filter_button">Last 7 days</button>
+                <button class="btn btn-secondary w-100 filter_button" (click)="filterByWeek()">Last 7 days</button>
             </div>
         </div>
         <label class="col-12 col-sm-1 d-flex align-items-center range">Range:</label>
         <div class="col-12 col-sm-5 d-flex pr-0 pl-0">
             <div class="col-6 col-sm-6 pr-2 pl-2 align-items-center d-flex">
-                <input class="form-control input_date" id="date" name="date" placeholder="From" type="date" />
+                <input class="form-control input_date" placeholder="From" type="date" (change)="onFromDate($event)" />
             </div>
             <div class="col-6 col-sm-6 pr-2 pl-2 align-items-center d-flex">
-                <input class="form-control input_date" id="date" name="date" placeholder="To" type="date" />
+                <input class="form-control input_date" placeholder="To" type="date" (change)="onToDate($event)" />
             </div>
         </div>
     </div>
@@ -26,31 +26,31 @@
             <!-- Date Column -->
             <ng-container matColumnDef="Date">
                 <th mat-header-cell *matHeaderCellDef> Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.Date}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
             </ng-container>
 
             <!-- Amount Column -->
             <ng-container matColumnDef="Amount">
                 <th mat-header-cell *matHeaderCellDef> Amount </th>
-                <td mat-cell *matCellDef="let element"> {{element.Amount}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
             </ng-container>
 
             <!-- Concept Column -->
             <ng-container matColumnDef="Concept">
                 <th mat-header-cell *matHeaderCellDef> Concept </th>
-                <td mat-cell *matCellDef="let element"> {{element.Concept}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="Name">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
             </ng-container>
 
             <!-- Phone Column -->
             <ng-container matColumnDef="Phone">
                 <th mat-header-cell *matHeaderCellDef> Phone </th>
-                <td mat-cell *matCellDef="let element"> {{element.Phone}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
