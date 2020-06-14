@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-direct-payment',
   templateUrl: './direct-payment.component.html',
-  styleUrls: ['./direct-payment.component.scss']
+  styleUrls: ['./direct-payment.component.scss'],
 })
 export class DirectPaymentComponent implements OnInit {
   form: FormGroup;
@@ -15,11 +15,12 @@ export class DirectPaymentComponent implements OnInit {
   tickets: any;
   result: string;
   default_ticket: string;
+  public_key: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private ticketSaleService: TicketSaleService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -27,6 +28,10 @@ export class DirectPaymentComponent implements OnInit {
       lastname: ['', Validators.required],
       phone: ['', Validators.required],
       amount: ['', Validators.required],
+    });
+    this.ticketSaleService.getTickets().subscribe((data: any) => {
+      console.log(data);
+      this.public_key = data.public_key;
     });
     this.loadStripe();
     this.result = '';
@@ -55,8 +60,7 @@ export class DirectPaymentComponent implements OnInit {
     }
 
     var handler = (<any>window).StripeCheckout.configure({
-      key:
-        'pk_test_51Gq1vjDV8v3FnDVTpqIoQaEbtT0XxDH6lRnukoqmVSToojBoFH0MfwBB5TRiUHk7BtmyjpoAJdZPmmQ1H1Cv8OVt00lSu4p0Tf',
+      key: this.public_key,
       locale: 'auto',
       token: async (token) => {
         this.result = 'just a minute...';
@@ -99,5 +103,4 @@ export class DirectPaymentComponent implements OnInit {
       amount: 100 * this.f.amount.value,
     });
   }
-
 }

@@ -15,7 +15,8 @@ export class TicketSaleComponent implements OnInit {
   tickets: any;
   result: string;
   default_ticket: string;
-  ticket_amount = 10;
+  ticket_amount: number;
+  public_key: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,13 +31,15 @@ export class TicketSaleComponent implements OnInit {
       ticket_number: ['', Validators.required],
     });
     this.ticketSaleService.getTickets().subscribe((data: any) => {
-      console.log(data.data);
+      console.log(data);
       this.tickets = data.data;
       if (data.data.length > 0)
         this.default_ticket = data.data[0].ticket_number;
       else this.default_ticket = '';
+      this.ticket_amount = data.ticket_price;
+      this.public_key = data.public_key;
     });
-    this.loadStripe();
+    this.loadStripe(); 
     this.result = '';
   }
 
@@ -63,8 +66,7 @@ export class TicketSaleComponent implements OnInit {
     }
 
     var handler = (<any>window).StripeCheckout.configure({
-      key:
-        'pk_test_51Gq1vjDV8v3FnDVTpqIoQaEbtT0XxDH6lRnukoqmVSToojBoFH0MfwBB5TRiUHk7BtmyjpoAJdZPmmQ1H1Cv8OVt00lSu4p0Tf',
+      key: this.public_key,
       locale: 'auto',
       token: async (token) => {
         this.result = 'just a minute...';

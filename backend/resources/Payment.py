@@ -2,7 +2,7 @@ from flask import request
 
 from flask_restful import Resource
 
-from Model import db, Transactions, TransactionsSchema, Tickets, TicketsSchema
+from Model import db, Transactions, TransactionsSchema, Tickets, TicketsSchema, Secret, SecretSchema
 
 import stripe
 
@@ -14,12 +14,17 @@ transactions_schema = TransactionsSchema(many=True)
 
 transaction_schema = TransactionsSchema()
 
-stripe_keys = {
-    'secret_key': 'sk_test_51Gq1vjDV8v3FnDVTeEEo3y6tf2pG8sbXMRAct1K0UdUawjSsL0vpAtRL4Nva3ZrOS1YjKjTbElMGpDcqAwT76sYQ00R38KjW2g',
-    'publishable_key': 'pk_test_51Gq1vjDV8v3FnDVTpqIoQaEbtT0XxDH6lRnukoqmVSToojBoFH0MfwBB5TRiUHk7BtmyjpoAJdZPmmQ1H1Cv8OVt00lSu4p0Tf'
-}
+# stripe_keys = {
+#     'secret_key': 'sk_test_51Gq1vjDV8v3FnDVTeEEo3y6tf2pG8sbXMRAct1K0UdUawjSsL0vpAtRL4Nva3ZrOS1YjKjTbElMGpDcqAwT76sYQ00R38KjW2g',
+#     'publishable_key': 'pk_test_51Gq1vjDV8v3FnDVTpqIoQaEbtT0XxDH6lRnukoqmVSToojBoFH0MfwBB5TRiUHk7BtmyjpoAJdZPmmQ1H1Cv8OVt00lSu4p0Tf'
+# }
 
-stripe.api_key = stripe_keys['secret_key']
+# stripe_keys = {
+#     'secret_key': 'sk_test_kQ8MMDpUdEe1nyt7zYefLjKe00OwOeGvR5',
+#     'publishable_key': 'pk_test_ero0ONRwWP2CDLMsXwXuDKfv00N2bZoiVZ'
+# }
+
+# stripe.api_key = stripe_keys['secret_key']
 
 
 def convert_park_to_dict(park, OBJ):
@@ -47,7 +52,17 @@ class PaymentResource(Resource):
 
             return {'message': 'No input data provided'}, 400
 
-        #Validate and deserialize input
+        secret = Secret.query.all()
+
+        secret_data = convert_park_to_dict(secret[0], Tickets)
+        print(secret_data['secret_key'])
+
+        stripe_keys = {
+            'secret_key': secret_data['secret_key'],
+            'publishable_key': secret_data['public_key']
+        }
+
+        stripe.api_key = stripe_keys['secret_key']
 
         response = json.dumps(json_data)
 

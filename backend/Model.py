@@ -117,6 +117,25 @@ class Transactions(db.Model):
         self.created_at = created_at
 
 
+class Secret(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    public_key = db.Column(db.String(150), nullable=False)
+
+    secret_key = db.Column(db.String(150), nullable=False)
+
+    ticket_price = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, public_key, secret_key, ticket_price):
+
+        self.public_key = public_key
+
+        self.secret_key = secret_key
+
+        self.ticket_price = ticket_price
+
+
 class UserSchema(ma.Schema):
 
     id = fields.Integer(dump_only=True)
@@ -170,4 +189,12 @@ class TransactionsSchema(ma.Schema):
 
     created_at = fields.DateTime(required=False)
 
+
+class SecretSchema(ma.Schema):
+
+    public_key = fields.String(required=True)
+
+    secret_key = fields.String(required=True)
+
+    ticket_price = fields.Integer(dump_only=True)
 

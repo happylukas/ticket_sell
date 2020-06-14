@@ -12,7 +12,7 @@ import {
   providedIn: 'root'
 })
 export class TransactionsService {
-  private REST_API_SERVER = 'https://01d80137f53b.ngrok.io'
+  private REST_API_SERVER = 'http://localhost:5000'
 
   constructor(private httpClient: HttpClient) { }
 

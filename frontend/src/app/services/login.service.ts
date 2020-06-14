@@ -12,7 +12,7 @@ import {
   providedIn: 'root',
 })
 export class LoginService {
-  private REST_API_SERVER = 'https://01d80137f53b.ngrok.io/login';
+  private REST_API_SERVER = 'http://localhost:5000/login';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
